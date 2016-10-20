@@ -1,0 +1,321 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.raze</groupId>
+  <artifactId>iyw</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>iyw Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+  	 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <spring.version>4.1.2.RELEASE</spring.version>
+  </properties> 
+  
+  <dependencies>
+  
+	<!-- junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- slf4j -->
+    <dependency>
+	  <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+	  <version>1.7.12</version>
+	</dependency>
+	
+	<!-- logback -->
+	<dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-core</artifactId>
+	  <version>1.1.3</version>
+	</dependency>
+	<dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-classic</artifactId>
+	  <version>1.1.3</version>
+	  <exclusions>
+		<exclusion>
+		  <artifactId>slf4j-api</artifactId>
+		  <groupId>org.slf4j</groupId>
+		</exclusion>
+	  </exclusions>
+	</dependency>
+    
+    <!-- TOMCAT -->
+    <dependency>
+	  <groupId>org.apache.tomcat</groupId>
+	  <artifactId>tomcat-catalina</artifactId>
+	  <version>7.0.67</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat</groupId>
+	  <artifactId>tomcat-dbcp</artifactId>
+	  <version>7.0.67</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat.embed</groupId>
+	  <artifactId>tomcat-embed-core</artifactId>
+	  <version>7.0.67</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat.embed</groupId>
+	  <artifactId>tomcat-embed-logging-juli</artifactId>
+	  <version>7.0.42</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat</groupId>
+	  <artifactId>tomcat-juli</artifactId>
+	  <version>7.0.42</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat.embed</groupId>
+	  <artifactId>tomcat-embed-jasper</artifactId>
+	  <version>7.0.42</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat</groupId>
+	  <artifactId>tomcat-jasper</artifactId>
+	  <version>7.0.42</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat</groupId>
+	  <artifactId>tomcat-jasper-el</artifactId>
+	  <version>7.0.42</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.tomcat</groupId>
+	  <artifactId>tomcat-jsp-api</artifactId>
+	  <version>7.0.42</version>
+	</dependency>
+	
+	<!-- MyBatis-Spring -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.2.2</version>
+      <scope>compile</scope>
+    </dependency>
+     
+    <!-- MyBatis -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.2.8</version>
+      <scope>compile</scope>
+    </dependency>
+     
+    <!-- Spring -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-web</artifactId>
+       <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-orm</artifactId>
+       <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-jdbc</artifactId>
+       <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-tx</artifactId>
+       <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-webmvc</artifactId>
+       <version>${spring.version}</version>
+    </dependency>
+    
+    <!-- Spring Security -->
+    <dependency>
+       <groupId>org.springframework.security</groupId>
+       <artifactId>spring-security-core</artifactId>
+       <version>4.0.3.RELEASE</version>
+    </dependency>
+    <dependency>
+       <groupId>org.springframework.security</groupId>
+       <artifactId>spring-security-web</artifactId>
+       <version>4.0.3.RELEASE</version>
+	</dependency>
+	<dependency>
+       <groupId>org.springframework.security</groupId>
+       <artifactId>spring-security-config</artifactId>
+       <version>4.0.3.RELEASE</version>
+	</dependency>
+    <dependency>  
+       <groupId>org.springframework.security</groupId>  
+       <artifactId>spring-security-taglibs</artifactId>  
+       <version>4.0.3.RELEASE</version>  
+    </dependency>  
+	
+     
+    <!-- DBCP -->
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>2.0.1</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>20030825.184428</version>
+        <scope>compile</scope>
+    </dependency>
+     
+    <!-- commons-pool -->
+    <dependency>
+        <groupId>commons-pool</groupId>
+        <artifactId>commons-pool</artifactId>
+        <version>1.4</version>
+    </dependency>
+     
+    <!-- mysql connector java -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.34</version>
+        <scope>compile</scope>
+    </dependency>
+	
+	<!-- ojdbc -->
+	<dependency>
+    	<groupId>com.oracle</groupId>
+    	<artifactId>ojdbc14</artifactId>
+    	<version>10.2.0.4.0</version>
+	</dependency>
+	
+	<!-- fastjson -->
+	<dependency>
+    	<groupId>com.alibaba</groupId>
+    	<artifactId>fastjson</artifactId>
+    	<version>1.2.8</version>
+	</dependency>
+	
+	<!-- struts2 -->
+	<dependency>
+		<groupId>org.apache.struts</groupId>
+		<artifactId>struts2-core</artifactId>
+		<version>2.3.24.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.struts</groupId>
+		<artifactId>struts2-convention-plugin</artifactId>
+		<version>2.3.24.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.struts</groupId>
+		<artifactId>struts2-spring-plugin</artifactId>
+		<version>2.3.24.1</version>
+	</dependency>
+	
+	<!-- shiro -->
+    <dependency>  
+        <groupId>commons-logging</groupId>  
+        <artifactId>commons-logging</artifactId>  
+        <version>1.1.3</version>  
+    </dependency>  
+	<dependency>  
+        <groupId>org.apache.shiro</groupId>  
+        <artifactId>shiro-core</artifactId>  
+        <version>1.2.2</version>  
+    </dependency>
+    <dependency>  
+    	<groupId>org.apache.shiro</groupId>  
+    	<artifactId>shiro-web</artifactId>  
+    	<version>1.2.2</version>  
+	</dependency>  
+	<dependency>
+    	<groupId>org.apache.shiro</groupId>
+    	<artifactId>shiro-spring</artifactId>
+    	<version>1.2.2</version>
+	</dependency>
+    
+    <!-- pinyin4j -->
+    <dependency>
+  		<groupId>com.belerweb</groupId>
+  		<artifactId>pinyin4j</artifactId>
+  		<version>2.5.0</version>
+	</dependency>
+	
+	<!-- POI -->
+	<dependency>
+    	<groupId>org.apache.poi</groupId>
+    	<artifactId>poi</artifactId>
+    	<version>3.9</version>
+	</dependency>
+	
+	<!-- jsoup -->
+	<dependency>
+	    <groupId>org.jsoup</groupId>
+	    <artifactId>jsoup</artifactId>
+	    <version>1.8.3</version>
+	</dependency>
+	
+	<dependency>
+    	<groupId>net.sf.flexjson</groupId>
+    	<artifactId>flexjson</artifactId>
+    	<version>2.1</version>
+	</dependency>
+	
+	<!-- commons-lang -->
+	<dependency>
+    	<groupId>commons-lang</groupId>
+    	<artifactId>commons-lang</artifactId>
+    	<version>2.6</version>
+	</dependency>
+	
+	<!-- JSTL -->
+	<dependency>
+	    <groupId>jstl</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+	<dependency>
+	    <groupId>taglibs</groupId>
+	    <artifactId>standard</artifactId>
+	    <version>1.1.2</version>
+	</dependency>
+	
+	
+  </dependencies>
+  
+  <build>
+    <finalName>iyw</finalName>
+    <plugins>
+	    <!-- FIX BUG, Dynamic Web Module 3.0 requires Java 1.6 or newer. -->
+    	<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-compiler-plugin</artifactId>
+        	<version>2.3.2</version>
+        	<configuration>
+          		<source>1.7</source>
+          		<target>1.7</target>
+        	</configuration>
+      	</plugin>
+     </plugins>
+  </build>
+  
+</project>

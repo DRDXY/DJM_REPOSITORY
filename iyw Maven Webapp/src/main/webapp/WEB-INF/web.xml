@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>iyw</display-name>
+
+  <!-- 设置默认页面 --> 
+  <welcome-file-list>
+    <welcome-file>/login/login.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 指定会话超时时间 -->
+  <session-config>
+	  <session-timeout>3</session-timeout>
+  </session-config>
+   
+  <!-- 定义Spring监听器,加载Spring -->
+  <listener>
+     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  
+  <!-- Spring 刷新Introspector防止内存泄露 -->
+  <listener>
+	  <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  
+  <!-- 指定Spring配置文件位置 -->
+  <context-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring/applicationContext.xml</param-value>
+  </context-param>
+  
+  <!-- Shiro过滤器 -->
+  <!-- <filter>
+      <filter-name>shiroFilter</filter-name>
+      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+      <init-param>  
+   		  该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理  
+    	  <param-name>targetFilterLifecycle</param-name>  
+          <param-value>true</param-value>  
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>shiroFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher> 
+  </filter-mapping> -->
+  
+  <!-- Spring Security 过滤器 -->
+  <filter> 
+     <filter-name>springSecurityFilterChain</filter-name> 
+     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+  </filter> 
+  <filter-mapping> 
+     <filter-name>springSecurityFilterChain</filter-name> 
+     <url-pattern>/*</url-pattern> 
+  </filter-mapping>
+  
+   
+  <!-- 解决乱码 -->
+  <filter> 
+    <filter-name>encodingFilter</filter-name> 
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+    <init-param> 
+        <param-name>encoding</param-name> 
+        <param-value>UTF-8</param-value> 
+    </init-param> 
+    <init-param> 
+        <param-name>forceEncoding</param-name> 
+        <param-value>true</param-value> 
+    </init-param> 
+  </filter> 
+  <filter-mapping> 
+    <filter-name>encodingFilter</filter-name> 
+    <url-pattern>/*</url-pattern> 
+  </filter-mapping> 
+  
+  <!-- struts2的核心过滤器 -->
+  <filter>
+	<filter-name>struts2</filter-name>
+	<!-- <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class> -->
+	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	<init-param>
+		<param-name>config</param-name>
+		<param-value>struts2/struts-default.xml,struts2/struts2.xml</param-value>
+	</init-param>
+  </filter>
+  <filter-mapping>
+	<filter-name>struts2</filter-name>
+	<url-pattern>/*</url-pattern>
+	<dispatcher>REQUEST</dispatcher>
+	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  
+  <!-- 配置Spring MVC -->
+  <servlet> 
+      <servlet-name>dispatcherServlet</servlet-name>
+      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+      <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/mvcContext.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>dispatcherServlet</servlet-name>
+      <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+   
+</web-app>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserInfoNamespace">
+
+  <resultMap id="UserInfoResult" type="com.raze.domain.UserInfo">
+    <result column="ID" property="id"/>
+    <result column="USERNAME" property="userName"/>
+    <result column="PASSWORD" property="password"/>
+    <result column="TELEPHONE" property="telephone"/>
+    <result column="CREATETIME" property="createTime"/>
+    <result column="UPDATETIME" property="updateTime"/>
+    <result column="ISENABLE" property="isEnable"/>
+  </resultMap>
+ 
+  <select id="obtainList" resultMap="UserInfoResult">
+  	SELECT * FROM T_USER_INFO
+  </select>
+   
+  <insert id="insert" parameterType="com.raze.domain.UserInfo">
+      INSERT INTO T_USER_INFO(USERNAME, PASSWORD, TELEPHONE, CREATETIME, UPDATETIME, ISENABLE) 
+      VALUES(#{userName}, #{password}, #{telephone}, #{createTime}, #{updateTime}, #{isEnable})
+  </insert>
+   
+  <update id="updateVipInfo" parameterType="com.raze.domain.UserInfo">
+      UPDATE T_USER_INFO set USERNAME=#{userName},PASSWORD=#{password},TELEPHONE=#{telephone},CREATETIM=#{CREATETIME},
+      	UPDATETIME=#{updateTime},ISENABLE=#{ISENABLE} where id=#{id}
+  </update>
+   
+  <delete id="deleteVipInfo" parameterType="long">
+      DELETE FROM T_USER_INFO WHERE ID=#{id}
+  </delete>
+   
+  <select id="selectVipInfo" parameterType="string" resultType="map">
+      SELECT * FROM T_USER_INFO WHERE USERNAME=#{userName}
+  </select>
+
+  <select id="obtainAuthorityCollentionByUserName" parameterType="string" resultType="map">
+  	  SELECT
+		M_B.USERNAME,
+		M_C.ROLENAME
+	  FROM
+		R_USER_ROLE M_A
+	  LEFT JOIN T_USER_INFO M_B ON M_A.USERID = M_B. ID
+	  LEFT JOIN T_ROLE_INFO M_C ON M_A.ROLEID = M_C. ID
+	  WHERE
+		M_B.USERNAME = #{username}
+  </select>
+  
+  <select id="obtainUserInfoByUserName" parameterType="string" resultMap="UserInfoResult">
+  	  SELECT 
+		* 
+	  FROM  
+		T_USER_INFO WHERE USERNAME = #{username} 
+  </select>
+  
+  <select id="obtainAllAuthority" resultType="map">
+  	SELECT
+		M_B.INTERCEPTURL,
+		M_C.ROLENAME
+	FROM
+		R_ROLE_AUTHORITY M_A
+	LEFT JOIN T_AUTHORITY_INFO M_B ON M_A.AUTHORITYID = M_B. ID
+	LEFT JOIN T_ROLE_INFO M_C ON M_A.ROLEID = M_C. ID
+  </select>
+   
+</mapper>

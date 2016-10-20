@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SsqInfoNamespace">
+
+  <resultMap id="SsqInfoResult" type="com.ssq.SsqInfo">
+    <result column="ISSUE" property="issue"/>
+    <result column="OPEND" property="opend"/>
+    <result column="RED" property="red"/>
+    <result column="BLUE" property="blue"/>
+    <result column="SUM_ONLY_RED" property="sum_only_red"/>
+    <result column="SUM_WITH_BLUE" property="sum_with_blue"/>
+    <result column="AVERAGE_ONLY_RED" property="average_only_red"/>
+    <result column="AVERAGE_WITH_BLUE" property="average_with_blue"/>
+  </resultMap>
+ 
+  <select id="obtainList" resultMap="SsqInfoResult">
+  	SELECT * FROM SSQ_WITH_SUM_AND_AVERAGE
+  </select>
+   
+  <insert id="insert" parameterType="SsqInfo">
+      INSERT INTO SSQ_WITH_SUM_AND_AVERAGE(ISSUE, OPEND, RED, BLUE, SUM_ONLY_RED, SUM_WITH_BLUE, AVERAGE_ONLY_RED, AVERAGE_WITH_BLUE) 
+      VALUES(#{issue}, #{opend}, #{red}, #{blue}, #{sum_only_red}, #{sum_with_blue}, #{average_only_red}, #{average_with_blue})
+  </insert>
+   
+  <update id="updateVipInfo" parameterType="SsqInfo">
+      update SSQ set vip_name=#{vipName},vip_password=#{vipPassword},create_time=#{createTime},update_time=#{updateTime} where id=#{id}
+  </update>
+   
+  <delete id="deleteVipInfo" parameterType="long">
+      delete from SSQ where id=#{id}
+  </delete>
+   
+  <select id="selectVipInfo" parameterType="string" resultType="map">
+      select * from SSQ where vip_name=#{vipName}
+  </select>
+   
+</mapper>

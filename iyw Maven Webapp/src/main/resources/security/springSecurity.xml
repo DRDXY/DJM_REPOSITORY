@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+		
+	<!-- 定义上下文返回的消息的国际化 -->  
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">  
+	    <property name="basename" value="classpath:security/messages_zh_CN.properties"/>  
+	</bean>
+		
+	<!-- 自动配置模式,拦截请求 -->
+	<security:http auto-config="true" use-expressions="false">
+		<!-- 配置不过滤静态资源 -->
+		<security:intercept-url pattern="/**/*.css" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/**/*.jpg" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/**/*.png" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/**/*.js" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="http://www.springframework.org/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<!-- 自定义无权限访问页面 -->
+		<security:access-denied-handler error-page="/springsecurity/denied.jsp"/>	
+		
+		<!-- 配置不过滤登录页面 -->
+		<security:intercept-url pattern="/security/MyJsp.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:form-login login-page="/security/MyJsp.jsp" default-target-url="/security/d.jsp" 
+			authentication-failure-url="/security/MyJsp.jsp?error=1" login-processing-url="/login" 
+			username-parameter="username" password-parameter="password"/>
+		
+		<security:custom-filter ref="myFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+		<!-- <security:intercept-url pattern="/**" access="ROLE_ADMIN"/> -->
+		
+		<!-- 配置CSRF跨站请求伪造 -->
+		<security:csrf disabled="false"/>
+		
+	</security:http>  
+		
+	<!-- 开启Spring Security3认证和授权日志 -->  
+    <bean class="org.springframework.security.authentication.event.LoggerListener"/>  
+    <bean class="org.springframework.security.access.event.LoggerListener"/>  
+    
+    <!-- 自定义filter -->
+    <bean id="myFilterSecurityInterceptor" class="com.raze.security.MyFilterSecurityInterceptor">
+       <property name="authenticationManager" ref="authenticationManager"></property>
+       <property name="accessDecisionManager" ref="myAccessDecisionManager"></property>
+    </bean>
+    
+	<!-- 认证管理器,实现用户认证的入口，主要实现UserDetailsService接口即可 -->
+	<security:authentication-manager alias="authenticationManager">
+	   <security:authentication-provider user-service-ref="myUserDetailsService"></security:authentication-provider>
+	</security:authentication-manager>
+	
+	<!-- 认证管理器,直接暴露SQL,非常不推荐 -->
+	<!-- <security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="SELECT 
+					USERNAME, PASSWORD, ISENABLE AS ENABLED 
+				FROM  
+					T_USER_INFO WHERE USERNAME = ? "
+				authorities-by-username-query="SELECT
+					M_B.USERNAME,
+					M_C.ROLENAME AS AUTHORITY
+				FROM
+					R_USER_ROLE M_A
+				LEFT JOIN T_USER_INFO M_B ON M_A.USERID = M_B. ID
+				LEFT JOIN T_ROLE_INFO M_C ON M_A.ROLEID = M_C. ID
+				WHERE
+					M_B.USERNAME = ? "/>
+		</security:authentication-provider>
+	</security:authentication-manager> -->
+	
+</beans>
